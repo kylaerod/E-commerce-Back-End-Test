@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection.js');
+const Product = require('./Product'); // Import the Product model after Category
 
 class Category extends Model {}
 
@@ -25,6 +25,11 @@ Category.init(
     modelName: 'category',
   }
 );
+
+// Check if Product model is a subclass of Sequelize.Model
+if (!(Product.prototype instanceof Model)) {
+  throw new Error('Product is not a subclass of Sequelize.Model');
+}
 
 Category.hasMany(Product, {
   foreignKey: 'category_id',
