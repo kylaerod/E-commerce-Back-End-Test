@@ -7,6 +7,25 @@ class ProductTag extends Model {}
 ProductTag.init(
   {
     // define columns
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    product_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'product',
+        key: 'id'
+      }
+    },
+    tag_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tag',
+        key: 'id'
+      }
+    }
   },
   {
     sequelize,
@@ -16,5 +35,13 @@ ProductTag.init(
     modelName: 'product_tag',
   }
 );
+
+ProductTag.belongsTo(Product, {
+  foreignKey: 'product_id',
+});
+
+ProductTag.belongsTo(Tag, {
+  foreignKey: 'tag_id',
+});
 
 module.exports = ProductTag;
